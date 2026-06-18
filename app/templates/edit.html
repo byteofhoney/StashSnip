@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="form-container">
+    <h1>Edit Snip</h1>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+
+        <div class="form-group">
+            {{ form.title.label }}
+            {{ form.title() }}
+        </div>
+
+        <div class="form-group">
+            {{ form.language.label }}
+            {{ form.language() }}
+        </div>
+
+        <div class="form-group">
+            {{ form.description.label }}
+            {{ form.description() }}
+        </div>
+
+        <div class="form-group">
+            {{ form.code.label }}
+            {{ form.code(rows=12) }}
+        </div>
+
+        <div class="form-group">
+            {{ form.tags.label }}
+            {{ form.tags() }}
+        </div>
+
+        <button type="submit" class="btn-submit">Update Snip</button>
+        <a href="/snippet/{{ snippet._id }}" class="btn-cancel">Cancel</a>
+    </form>
+</div>
+{% endblock %}

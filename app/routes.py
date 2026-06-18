@@ -43,3 +43,36 @@ def delete_snippet(id):
     snippets_collection.delete_one({"_id": ObjectId(id)})
     flash("Snip deleted.", "success")
     return redirect(url_for("main.index"))
+
+@main.route("/edit/<id>", methods=["GET", "POST"])
+def edit_snippet(id):
+    snippet = snippets_collection.find_one({"_id": ObjectId(id)})
+    if not snippet:
+        return render_template("404.html"), 404
+    
+    form = SnippetForm()
+    
+    if form.validate_on_submit():
+        tags = [tag.strip() for tag in form.tags.data.split(",") if tag.strip()]
+        snippets_collection.update_one(
+            {"_id": ObjectId(id)},
+            {"$set": {
+                "title": form.title.data,
+                "language": form.language.data,
+                "code": form.code.data,
+                "description": form.description.data,
+                "tags": tags,
+                "updated_at": datetime.utcnow()
+            }}
+        )
+        flash("Snip updated!", "success")
+        return redirect(url_for("main.view_snippet", id=id))
+    
+    # Pre-fill form with existing data
+    form.title.data = snippet["title"]
+    form.language.data = snippet["language"]
+    form.code.data = snippet["code"]
+    form.description.data = snippet.get("description", "")
+    form.tags.data = ", ".join(snippet.get("tags", []))
+    
+    return render_template("edit.html", form=form, snippet=snippet)
