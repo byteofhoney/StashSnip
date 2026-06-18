@@ -8,8 +8,33 @@ main = Blueprint("main", __name__)
 
 @main.route("/")
 def index():
-    snippets = list(snippets_collection.find().sort("created_at", -1))
-    return render_template("index.html", snippets=snippets)
+    query = request.args.get("q", "")
+    tag = request.args.get("tag", "")
+    language = request.args.get("language", "")
+
+    filters = {}
+
+    if query:
+        filters["$or"] = [
+            {"title": {"$regex": query, "$options": "i"}},
+            {"description": {"$regex": query, "$options": "i"}}
+        ]
+    if tag:
+        filters["tags"] = tag
+    if language:
+        filters["language"] = language
+
+    snippets = list(snippets_collection.find(filters).sort("created_at", -1))
+
+    languages = snippets_collection.distinct("language")
+
+    return render_template("index.html", 
+        snippets=snippets, 
+        query=query, 
+        tag=tag,
+        language=language,
+        languages=languages
+    )
 
 @main.route("/add", methods=["GET", "POST"])
 def add_snippet():
