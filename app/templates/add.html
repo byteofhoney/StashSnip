@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="form-container">
+    <h1>New Snip</h1>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+
+        <div class="form-group">
+            {{ form.title.label }}
+            {{ form.title(placeholder="e.g. MongoDB aggregation pipeline") }}
+        </div>
+
+        <div class="form-group">
+            {{ form.language.label }}
+            {{ form.language() }}
+        </div>
+
+        <div class="form-group">
+            {{ form.description.label }}
+            {{ form.description(placeholder="What does this snippet do?") }}
+        </div>
+
+        <div class="form-group">
+            {{ form.code.label }}
+            {{ form.code(placeholder="Paste your code here...", rows=12) }}
+        </div>
+
+        <div class="form-group">
+            {{ form.tags.label }}
+            {{ form.tags(placeholder="e.g. mongodb, aggregation, backend") }}
+        </div>
+
+        <button type="submit" class="btn-submit">Save Snip</button>
+        <a href="/" class="btn-cancel">Cancel</a>
+    </form>
+</div>
+{% endblock %}
