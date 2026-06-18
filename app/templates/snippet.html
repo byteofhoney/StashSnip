@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="snippet-detail">
+    <div class="detail-header">
+        <div>
+            <span class="language-badge">{{ snippet.language }}</span>
+            <h1>{{ snippet.title }}</h1>
+            {% if snippet.description %}
+                <p class="description">{{ snippet.description }}</p>
+            {% endif %}
+        </div>
+        <div class="detail-actions">
+            <a href="/edit/{{ snippet._id }}" class="btn-edit">Edit</a>
+            <form method="POST" action="/delete/{{ snippet._id }}">
+                <button type="submit" class="btn-delete" onclick="return confirm('Delete this snip?')">Delete</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="tags-row">
+        {% for tag in snippet.tags %}
+        <a href="/?tag={{ tag }}" class="tag">{{ tag }}</a>
+        {% endfor %}
+    </div>
+
+    <div class="code-block">
+        <button class="copy-btn" onclick="copyCode()">Copy</button>
+        <pre><code class="{{ snippet.language }}">{{ snippet.code }}</code></pre>
+    </div>
+
+    <a href="/" class="back-link">← Back to all snips</a>
+</div>
+{% endblock %}

@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash
 from app.db import snippets_collection
 from app.forms import SnippetForm
 from datetime import datetime
+from bson import ObjectId
 
 main = Blueprint("main", __name__)
 
@@ -27,3 +28,18 @@ def add_snippet():
         flash("Snip saved successfully!", "success")
         return redirect(url_for("main.index"))
     return render_template("add.html", form=form)
+
+
+
+@main.route("/snippet/<id>")
+def view_snippet(id):
+    snippet = snippets_collection.find_one({"_id": ObjectId(id)})
+    if not snippet:
+        return render_template("404.html"), 404
+    return render_template("snippet.html", snippet=snippet)
+
+@main.route("/delete/<id>", methods=["POST"])
+def delete_snippet(id):
+    snippets_collection.delete_one({"_id": ObjectId(id)})
+    flash("Snip deleted.", "success")
+    return redirect(url_for("main.index"))
