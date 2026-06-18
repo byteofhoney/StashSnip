@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-header">
+    <h1>My Snips</h1>
+    <p>{{ snippets|length }} snippet{{ 's' if snippets|length != 1 else '' }} saved</p>
+</div>
+
+{% if snippets %}
+    <div class="snippets-grid">
+        {% for snippet in snippets %}
+        <div class="snippet-card">
+            <div class="card-header">
+                <span class="language-badge">{{ snippet.language }}</span>
+                <a href="/snippet/{{ snippet._id }}" class="card-title">{{ snippet.title }}</a>
+            </div>
+            <div class="card-tags">
+                {% for tag in snippet.tags %}
+                <span class="tag">{{ tag }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="empty-state">
+        <p>No snips yet. <a href="/add">Add your first one →</a></p>
+    </div>
+{% endif %}
+{% endblock %}
