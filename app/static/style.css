@@ -370,3 +370,62 @@ main { max-width: 1000px; margin: 0 auto; padding: 2rem 1.5rem; }
 
 .back-link { color: var(--muted); font-size: 0.85rem; }
 .back-link:hover { color: var(--text); }
+
+/* ── Delete Modal ── */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-overlay.active { display: flex; }
+
+.modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.8rem;
+    max-width: 380px;
+    width: 90%;
+}
+
+.modal h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+    color: var(--text);
+}
+
+.modal p {
+    color: var(--muted);
+    font-size: 0.88rem;
+    line-height: 1.5;
+    margin-bottom: 1.4rem;
+}
+
+.modal p strong { color: var(--text); }
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.btn-delete-confirm {
+    background: #7f1d1d;
+    color: #fca5a5;
+    border: 1px solid #991b1b;
+    padding: 0.5rem 1.1rem;
+    border-radius: var(--radius);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.btn-delete-confirm:hover { background: #991b1b; }

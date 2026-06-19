@@ -29,3 +29,21 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 3000);
     });
 });
+
+
+function openModal(id, title) {
+    document.getElementById("modalSnipTitle").textContent = '"' + title + '"';
+    document.getElementById("modalDeleteForm").action = "/delete/" + id;
+    document.getElementById("deleteModal").classList.add("active");
+}
+
+function closeModal() {
+    document.getElementById("deleteModal").classList.remove("active");
+}
+
+// Close modal on overlay click
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("deleteModal").addEventListener("click", function(e) {
+        if (e.target === this) closeModal();
+    });
+});
