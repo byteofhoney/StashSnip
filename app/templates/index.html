@@ -31,20 +31,27 @@
 {% if snippets %}
     <div class="snippets-grid">
         {% for snippet in snippets %}
-        <div class="snippet-card">
-            <div class="card-header">
-                <span class="language-badge">{{ snippet.language }}</span>
-                <a href="/snippet/{{ snippet._id }}" class="card-title">{{ snippet.title }}</a>
-            </div>
-            {% if snippet.description %}
-            <p class="card-description">{{ snippet.description }}</p>
-            {% endif %}
-            <div class="card-tags">
-                {% for t in snippet.tags %}
-                <a href="/?tag={{ t }}" class="tag">{{ t }}</a>
-                {% endfor %}
-            </div>
+            <div class="snippet-card">
+        <div class="card-corner-actions">
+            <form method="POST" action="/delete/{{ snippet._id }}" class="delete-form">
+                <button type="submit" class="card-delete-btn" onclick="return confirm('Delete this snip?')" title="Delete">
+                    🗑
+                </button>
+            </form>
         </div>
+        <div class="card-header">
+            <span class="language-badge">{{ snippet.language }}</span>
+            <a href="/snippet/{{ snippet._id }}" class="card-title">{{ snippet.title }}</a>
+        </div>
+        {% if snippet.description %}
+        <p class="card-description">{{ snippet.description }}</p>
+        {% endif %}
+        <div class="card-tags">
+            {% for t in snippet.tags %}
+            <a href="/?tag={{ t }}" class="tag">{{ t }}</a>
+            {% endfor %}
+        </div>
+    </div>
         {% endfor %}
     </div>
 {% else %}

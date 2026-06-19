@@ -178,6 +178,38 @@ main { max-width: 1000px; margin: 0 auto; padding: 2rem 1.5rem; }
     background: #231e19;
 }
 
+/* ── Card delete button ── */
+.card-corner-actions {
+    position: absolute;
+    bottom: 0.7rem;
+    right: 0.7rem;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.15s;
+}
+
+.snippet-card:hover .card-corner-actions {
+    opacity: 1;
+}
+
+.card-delete-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 0.85rem;
+    padding: 0.2rem 0.3rem;
+    border-radius: var(--radius);
+    line-height: 1;
+    color: var(--muted);
+}
+
+.card-delete-btn:hover {
+    background: #1f0d0d;
+    color: #f87171;
+}
+
+.delete-form { margin: 0; }
+
 
 
 
