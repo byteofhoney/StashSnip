@@ -416,6 +416,23 @@ main { max-width: 1000px; margin: 0 auto; padding: 2rem 1.5rem; }
     gap: 0.8rem;
 }
 
+.modal-actions .btn-cancel {
+    background: var(--border);
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 0.5rem 1.1rem;
+    border-radius: var(--radius);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.modal-actions .btn-cancel:hover {
+    border-color: var(--muted);
+    color: var(--text);
+}
+
 .btn-delete-confirm {
     background: #7f1d1d;
     color: #fca5a5;
