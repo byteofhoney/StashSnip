@@ -1,0 +1,68 @@
+/* style.css — VS Code Dark + Nunito + Cute Cards */
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+    --bg: #1e1e1e;
+    --surface: #252526;
+    --border: #3e3e42;
+    --primary: #007acc;
+    --text: #d4d4d4;
+    --text-muted: #858585;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Nunito', -apple-system, sans-serif;
+}
+
+code, textarea {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+}
+
+.snippet-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 2rem 2rem 0;
+    border-color: transparent #ffb700 transparent transparent;
+}
+
+.snippet-card::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 1.8rem 1.8rem 0;
+    border-color: transparent #ffd700 transparent transparent;  /* Lighter amber */
+}
+
+.snippet-card:hover {
+    border-color: var(--primary);
+    background: #2a2a2a;
+}
+
+.tag {
+    background: var(--border);
+    color: #9cdcfe;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+}
+
+.language-badge {
+    background: var(--primary);
+    color: white;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+}
