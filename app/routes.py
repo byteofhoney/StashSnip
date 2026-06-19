@@ -1,8 +1,9 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from app.db import snippets_collection
 from app.forms import SnippetForm
-from datetime import datetime
+from app.models import make_snippet
 from bson import ObjectId
+from app.utils import parse_tags
 
 main = Blueprint("main", __name__)
 
@@ -40,15 +41,14 @@ def index():
 def add_snippet():
     form = SnippetForm()
     if form.validate_on_submit():
-        tags = [tag.strip() for tag in form.tags.data.split(",") if tag.strip()]
-        snippet = {
-            "title": form.title.data,
-            "language": form.language.data,
-            "code": form.code.data,
-            "description": form.description.data,
-            "tags": tags,
-            "created_at": datetime.utcnow()
-        }
+        tags = parse_tags(form.tags.data)
+        snippet = make_snippet(
+        title=form.title.data,
+        language=form.language.data,
+        code=form.code.data,
+        description=form.description.data,
+        tags=tags
+    )
         snippets_collection.insert_one(snippet)
         flash("Snip saved successfully!", "success")
         return redirect(url_for("main.index"))
@@ -78,7 +78,7 @@ def edit_snippet(id):
     form = SnippetForm()
     
     if form.validate_on_submit():
-        tags = [tag.strip() for tag in form.tags.data.split(",") if tag.strip()]
+        tags = parse_tags(form.tags.data)
         snippets_collection.update_one(
             {"_id": ObjectId(id)},
             {"$set": {
