@@ -178,6 +178,38 @@ main { max-width: 1000px; margin: 0 auto; padding: 2rem 1.5rem; }
     background: #231e19;
 }
 
+/* ── Card delete button ── */
+.card-corner-actions {
+    position: absolute;
+    bottom: 0.7rem;
+    right: 0.7rem;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.15s;
+}
+
+.snippet-card:hover .card-corner-actions {
+    opacity: 1;
+}
+
+.card-delete-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 0.85rem;
+    padding: 0.2rem 0.3rem;
+    border-radius: var(--radius);
+    line-height: 1;
+    color: var(--muted);
+}
+
+.card-delete-btn:hover {
+    background: #1f0d0d;
+    color: #f87171;
+}
+
+.delete-form { margin: 0; }
+
 
 
 
@@ -338,3 +370,79 @@ main { max-width: 1000px; margin: 0 auto; padding: 2rem 1.5rem; }
 
 .back-link { color: var(--muted); font-size: 0.85rem; }
 .back-link:hover { color: var(--text); }
+
+/* ── Delete Modal ── */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-overlay.active { display: flex; }
+
+.modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.8rem;
+    max-width: 380px;
+    width: 90%;
+}
+
+.modal h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+    color: var(--text);
+}
+
+.modal p {
+    color: var(--muted);
+    font-size: 0.88rem;
+    line-height: 1.5;
+    margin-bottom: 1.4rem;
+}
+
+.modal p strong { color: var(--text); }
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.modal-actions .btn-cancel {
+    background: var(--border);
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 0.5rem 1.1rem;
+    border-radius: var(--radius);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.modal-actions .btn-cancel:hover {
+    border-color: var(--muted);
+    color: var(--text);
+}
+
+.btn-delete-confirm {
+    background: #7f1d1d;
+    color: #fca5a5;
+    border: 1px solid #991b1b;
+    padding: 0.5rem 1.1rem;
+    border-radius: var(--radius);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.btn-delete-confirm:hover { background: #991b1b; }

@@ -31,25 +31,55 @@
 {% if snippets %}
     <div class="snippets-grid">
         {% for snippet in snippets %}
-        <div class="snippet-card">
-            <div class="card-header">
-                <span class="language-badge">{{ snippet.language }}</span>
-                <a href="/snippet/{{ snippet._id }}" class="card-title">{{ snippet.title }}</a>
-            </div>
-            {% if snippet.description %}
-            <p class="card-description">{{ snippet.description }}</p>
-            {% endif %}
-            <div class="card-tags">
-                {% for t in snippet.tags %}
-                <a href="/?tag={{ t }}" class="tag">{{ t }}</a>
-                {% endfor %}
-            </div>
+            <div class="snippet-card">
+        <div class="card-corner-actions">
+            <button 
+                type="button" 
+                class="card-delete-btn" 
+                onclick="openModal('{{ snippet._id }}', '{{ snippet.title }}')"
+                title="Delete">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="3 6 5 6 21 6"/>
+                    <path d="M19 6l-1 14H6L5 6"/>
+                    <path d="M10 11v6"/>
+                    <path d="M14 11v6"/>
+                    <path d="M9 6V4h6v2"/>
+                </svg>
+            </button>
         </div>
+        <div class="card-header">
+            <span class="language-badge">{{ snippet.language }}</span>
+            <a href="/snippet/{{ snippet._id }}" class="card-title">{{ snippet.title }}</a>
+        </div>
+        {% if snippet.description %}
+        <p class="card-description">{{ snippet.description }}</p>
+        {% endif %}
+        <div class="card-tags">
+            {% for t in snippet.tags %}
+            <a href="/?tag={{ t }}" class="tag">{{ t }}</a>
+            {% endfor %}
+        </div>
+    </div>
         {% endfor %}
     </div>
 {% else %}
     <div class="empty-state">
-        <p>No snips found. <a href="/add">Add one →</a></p>
+        <p>No snips found. <a href="/add">Add New Snip</a></p>
     </div>
 {% endif %}
+
+<!-- Delete Modal -->
+<div class="modal-overlay" id="deleteModal">
+    <div class="modal">
+        <h3>Delete Snip?</h3>
+        <p>You're about to delete <strong id="modalSnipTitle"></strong>. This can't be undone.</p>
+        <div class="modal-actions">
+            <button type="button" class="btn-cancel" onclick="closeModal()">Cancel</button>
+            <form id="modalDeleteForm" method="POST">
+                <button type="submit" class="btn-delete-confirm">Delete</button>
+            </form>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
