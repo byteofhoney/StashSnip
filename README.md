@@ -45,10 +45,13 @@ Every developer accumulates dozens of useful code snippets. A regex that finally
 
 ## Interface
 
-> *(coming soon )*
+
+![Home](docs/screenshots/home.png)
+![Snippet View](docs/screenshots/snippet.png)
+![Add Snip](docs/screenshots/add.png)
+![Delete Modal](docs/screenshots/delete.png)
 
 ---
-
 
 ## Getting Started
 
