@@ -53,6 +53,20 @@ Every developer accumulates dozens of useful code snippets. A regex that finally
 
 ---
 
+## Live Demo
+
+**[https://stash-snip.up.railway.app/](https://stash-snip.up.railway.app/)**
+
+> ! Hosted on Railway's free tier.
+> If the app is asleep or gone, you know the credits ran out.
+
+Then follow the 5 minute rule!
+
+> Clone it and run it locally, it takes less then 5 minutes!
+
+Feel free to add a snippet, poke around, break something.
+
+---
 ## Getting Started
 
 ### Prerequisites
