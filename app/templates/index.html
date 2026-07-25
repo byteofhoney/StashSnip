@@ -61,6 +61,9 @@
         <p class="card-description">{{ snippet.description }}</p>
         {% endif %}
         <div class="card-tags">
+            {% if snippet.code %}
+            <div class="card-code-hidden" aria-hidden="true"><pre><code>{{ snippet.code }}</code></pre></div>
+            {% endif %}
             {% for t in snippet.tags %}
             <a href="/?tag={{ t }}" class="tag">{{ t }}</a>
             {% endfor %}
