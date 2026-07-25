@@ -1,10 +1,11 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, request, redirect, url_for, flash, Response
 from app.db import snippets_collection
 from app.forms import SnippetForm
 from app.models import make_snippet
 from bson import ObjectId
 from app.utils import parse_tags
 from datetime import datetime
+import json as _json
 
 main = Blueprint("main", __name__)
 
@@ -56,6 +57,25 @@ def add_snippet():
     return render_template("add.html", form=form)
 
 
+@main.route("/export")
+def export_snippets():
+    snapshots = list(snippets_collection.find().sort("created_at", -1))
+    payload = []
+    for snip in snapshots:
+        snip["_id"] = str(snip.get("_id"))
+        payload.append({
+            "title": snip.get("title"),
+            "language": snip.get("language"),
+            "code": snip.get("code"),
+            "description": snip.get("description") or "",
+            "tags": snip.get("tags") or [],
+        })
+    filename = f"stashsnip-export-{datetime.utcnow().strftime('%Y%m%d-%H%M%S')}.json"
+    return Response(
+        _json.dumps(payload, ensure_ascii=False, indent=2),
+        mimetype='application/json',
+        headers={'Content-Disposition': f'attachment; filename="{filename}"'},
+    )
 
 @main.route("/snippet/<id>")
 def view_snippet(id):
