@@ -1,4 +1,4 @@
-// Copy to clipboard
+// Copy to clipboard (detail page)
 function copyCode() {
     const code = document.querySelector(".code-block code");
     const btn = document.querySelector(".copy-btn");
@@ -16,6 +16,39 @@ function copyCode() {
             btn.style.color = "";
         }, 2000);
     });
+}
+
+// Copy snippet from card (index page)
+function copyCardCode(btn) {
+    const card = btn.closest(".snippet-card");
+    const codeEl = card.querySelector("pre code, .card-code");
+    if (!codeEl) return;
+    const text = codeEl.innerText || codeEl.textContent;
+    const label = btn.querySelector(".copy-label");
+
+    navigator.clipboard.writeText(text)
+        .then(() => flashCopy(btn, label))
+        .catch(() => {
+            const ta = document.createElement("textarea");
+            ta.value = text;
+            ta.style.position = "fixed";
+            ta.style.opacity = "0";
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand("copy");
+            document.body.removeChild(ta);
+            flashCopy(btn, label);
+        });
+}
+
+function flashCopy(btn, label) {
+    const prev = label ? label.textContent : "";
+    if (label) label.textContent = "Copied!";
+    btn.classList.add("copied");
+    setTimeout(() => {
+        if (label) label.textContent = prev || "Copy";
+        btn.classList.remove("copied");
+    }, 2000);
 }
 
 // Auto dismiss flash messages
