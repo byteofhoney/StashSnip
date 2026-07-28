@@ -243,6 +243,43 @@ main { max-width: 1000px; margin: 0 auto; padding: 2rem 1.5rem; }
 }
 .tag:hover { background: var(--amber-d); color: var(--amber); }
 
+/* Pagination */
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+}
+
+.pagination a,
+.pagination .disabled,
+.pagination .page-status {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.45rem 0.8rem;
+}
+
+.pagination a {
+    background: var(--surface);
+    color: var(--text);
+}
+
+.pagination a:hover {
+    border-color: var(--amber);
+    color: var(--amber);
+}
+
+.pagination .disabled {
+    color: var(--muted);
+    opacity: 0.55;
+}
+
+.pagination .page-status {
+    color: var(--muted);
+}
+
 /* Empty state  */
 .empty-state { text-align: center; padding: 4rem 2rem; color: var(--muted); }
 .empty-state h1 { font-size: 3.5rem; color: var(--border); margin-bottom: 1rem; }
