@@ -208,6 +208,35 @@ main { max-width: 1000px; margin: 0 auto; padding: 2rem 1.5rem; }
     color: #f87171;
 }
 
+/* ── Card copy button ── */
+.card-copy-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 0.2rem 0.35rem;
+    border-radius: var(--radius);
+    font-size: 0.75rem;
+    font-family: inherit;
+}
+
+.card-copy-btn:hover {
+    color: var(--text);
+    background: #2a2520;
+}
+
+.card-copy-btn.copied {
+    color: #17140f;
+    background: #3ecf8e;
+}
+
+.copy-label {
+    line-height: 1;
+}
+
 .delete-form { margin: 0; }
 
 

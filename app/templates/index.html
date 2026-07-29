@@ -50,11 +50,20 @@
         <div class="card-header">
             <span class="language-badge">{{ snippet.language }}</span>
             <a href="/snippet/{{ snippet._id }}" class="card-title">{{ snippet.title }}</a>
+            {% if snippet.code %}
+            <button type="button" class="card-copy-btn" onclick="copyCardCode(this)" title="Copy code">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                <span class="copy-label">Copy</span>
+            </button>
+            {% endif %}
         </div>
         {% if snippet.description %}
         <p class="card-description">{{ snippet.description }}</p>
         {% endif %}
         <div class="card-tags">
+            {% if snippet.code %}
+            <div class="card-code-hidden" aria-hidden="true"><pre><code>{{ snippet.code }}</code></pre></div>
+            {% endif %}
             {% for t in snippet.tags %}
             <a href="/?tag={{ t }}" class="tag">{{ t }}</a>
             {% endfor %}
