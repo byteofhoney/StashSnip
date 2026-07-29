@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, UTC
 from math import ceil
 
 from bson import ObjectId
@@ -121,7 +121,7 @@ def edit_snippet(id):
                     "code": form.code.data,
                     "description": form.description.data,
                     "tags": tags,
-                    "updated_at": datetime.utcnow(),
+                    "updated_at": datetime.now(UTC),
                 }
             },
         )

@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, UTC
 
 def make_snippet(title, language, code, description, tags):
     """
@@ -12,8 +12,9 @@ def make_snippet(title, language, code, description, tags):
         "code": code,
         "description": description,
         "tags": tags,
-        "created_at": datetime.utcnow(),
-        "updated_at": datetime.utcnow()
+        "created_at": datetime.now(UTC),
+        "updated_at": datetime.now(UTC)
+        
     }
 
 def format_snippet(snippet):
