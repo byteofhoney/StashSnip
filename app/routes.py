@@ -1,8 +1,9 @@
 from datetime import datetime, UTC
 from math import ceil
+import json
 
 from bson import ObjectId
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
 
 from app.db import snippets_collection
 from app.forms import SnippetForm
@@ -136,3 +137,25 @@ def edit_snippet(id):
     form.tags.data = ", ".join(snippet.get("tags", []))
 
     return render_template("edit.html", form=form, snippet=snippet)
+
+
+@main.route("/export")
+def export_snippets():
+    """Export all snippets as downloadable JSON file"""
+    # Get all snippets from database
+    snippets = list(snippets_collection.find())
+    
+    # Convert ObjectId to string for JSON compatibility
+    for snippet in snippets:
+        snippet["_id"] = str(snippet["_id"])
+        # Convert datetime objects to ISO format strings
+        if "created_at" in snippet:
+            snippet["created_at"] = snippet["created_at"].isoformat()
+        if "updated_at" in snippet:
+            snippet["updated_at"] = snippet["updated_at"].isoformat()
+    
+    # Return JSON with download headers
+    return jsonify(snippets), 200, {
+        "Content-Disposition": "attachment; filename=stash_snip_backup.json",
+        "Content-Type": "application/json"
+    }
