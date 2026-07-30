@@ -39,6 +39,10 @@ nav {
 .logo { font-size: 1.3rem; font-weight: 600; color: var(--text); }
 .logo span { color: var(--amber); }
 
+.nav-links { display: flex; align-items: center; gap: 1rem; }
+.nav-item { color: var(--muted); font-size: 0.88rem; font-weight: 500; }
+.nav-item:hover { color: var(--amber); }
+
 .btn-add {
     background: var(--amber);
     color: #17140f;
@@ -49,6 +53,118 @@ nav {
 }
 
 .btn-add:hover { opacity: 0.88; }
+
+/* ── Stats Dashboard ── */
+.stats-overview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.stat-label {
+    color: var(--muted);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-value {
+    color: var(--amber);
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.stat-value-sub {
+    color: var(--text);
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.stat-value-sub small {
+    color: var(--muted);
+    font-size: 0.78rem;
+    font-weight: 400;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.stats-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+}
+
+.stats-section h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1.2rem;
+    color: var(--text);
+}
+
+.bar-chart {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.chart-row {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 0.85rem;
+}
+
+.chart-label {
+    width: 100px;
+    color: var(--text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.chart-bar-container {
+    flex: 1;
+    background: var(--bg);
+    border-radius: var(--radius);
+    height: 12px;
+    overflow: hidden;
+}
+
+.chart-bar {
+    background: var(--amber);
+    height: 100%;
+    border-radius: var(--radius);
+    transition: width 0.3s ease;
+}
+
+.chart-bar.tag-bar {
+    background: #3b82f6;
+}
+
+.chart-count {
+    color: var(--muted);
+    font-size: 0.8rem;
+    width: 70px;
+    text-align: right;
+}
 
 /*  Layout */
 main { max-width: 1000px; margin: 0 auto; padding: 2rem 1.5rem; }

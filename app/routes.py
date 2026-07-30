@@ -136,3 +136,61 @@ def edit_snippet(id):
     form.tags.data = ", ".join(snippet.get("tags", []))
 
     return render_template("edit.html", form=form, snippet=snippet)
+
+
+@main.route("/stats")
+def stats():
+    total_snippets = snippets_collection.count_documents({})
+
+    oldest_snippet = next(iter(snippets_collection.find({"created_at": {"$exists": True}}).sort("created_at", 1).limit(1)), None)
+    newest_snippet = next(iter(snippets_collection.find({"created_at": {"$exists": True}}).sort("created_at", -1).limit(1)), None)
+
+    lang_pipeline = [
+        {"$match": {"language": {"$exists": True, "$nin": [None, ""]}}},
+        {"$group": {"_id": "$language", "count": {"$sum": 1}}},
+        {"$sort": {"count": -1}},
+    ]
+    tag_pipeline = [
+        {"$match": {"tags": {"$exists": True, "$ne": []}}},
+        {"$unwind": "$tags"},
+        {"$match": {"tags": {"$nin": [None, ""]}}},
+        {"$group": {"_id": "$tags", "count": {"$sum": 1}}},
+        {"$sort": {"count": -1}},
+        {"$limit": 10},
+    ]
+
+    try:
+        languages_stats = list(snippets_collection.aggregate(lang_pipeline))
+        tags_stats = list(snippets_collection.aggregate(tag_pipeline))
+    except AttributeError:
+        lang_counts = {}
+        tag_counts = {}
+        for doc in getattr(snippets_collection, "documents", []):
+            lang = doc.get("language")
+            if lang:
+                lang_counts[lang] = lang_counts.get(lang, 0) + 1
+            
+            tags = doc.get("tags", [])
+            if isinstance(tags, list):
+                for t in tags:
+                    if t:
+                        tag_counts[t] = tag_counts.get(t, 0) + 1
+                        
+        languages_stats = [
+            {"_id": k, "count": v}
+            for k, v in sorted(lang_counts.items(), key=lambda x: x[1], reverse=True)
+        ]
+        tags_stats = [
+            {"_id": k, "count": v}
+            for k, v in sorted(tag_counts.items(), key=lambda x: x[1], reverse=True)[:10]
+        ]
+
+    return render_template(
+        "stats.html",
+        total_snippets=total_snippets,
+        languages_stats=languages_stats,
+        tags_stats=tags_stats,
+        oldest_snippet=oldest_snippet,
+        newest_snippet=newest_snippet,
+    )
+
