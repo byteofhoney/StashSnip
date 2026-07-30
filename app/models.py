@@ -19,8 +19,12 @@ def make_snippet(title, language, code, description, tags):
 
 def format_snippet(snippet):
     """
-    Converts ObjectId to string so we can safely pass
-    snippets around without MongoDB-specific types.
+    Converts ObjectId and datetime objects so we can safely pass
+    snippets around or return them as JSON without serialization errors.
     """
     snippet["_id"] = str(snippet["_id"])
+    if isinstance(snippet.get("created_at"), datetime):
+        snippet["created_at"] = snippet["created_at"].isoformat()
+    if isinstance(snippet.get("updated_at"), datetime):
+        snippet["updated_at"] = snippet["updated_at"].isoformat()
     return snippet

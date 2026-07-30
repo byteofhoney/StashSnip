@@ -22,6 +22,7 @@ Every developer accumulates dozens of useful code snippets. A regex that finally
 - Save snippets with title, language, description and tags
 - Search by keyword across title and description
 - Filter by language or tag
+- REST API for accessing and searching snippets programmatically
 - Syntax highlighting via highlight.js
 - Copy to clipboard in one click
 - Edit and delete snippets
@@ -116,6 +117,20 @@ Visit `http://127.0.0.1:5000`
 - Connecting Flask to MongoDB Atlas using PyMongo
 - Building dynamic search and filtering with MongoDB regex queries
 - Managing environment variables securely with python-dotenv
+
+---
+
+## REST API
+
+StashSnip exposes a lightweight, public REST API mounted under `/api`:
+
+| Method | Endpoint | Description | Query Parameters |
+|---|---|---|---|
+| `GET` | `/api/snippets` | List all snippets in JSON format | `?q=search_term`, `?language=py`, `?tag=flask` |
+| `GET` | `/api/snippets/<id>` | Get a single snippet document by ID | None |
+
+### Authentication & Scope
+The API is currently open (unauthenticated) for client tools and browser extensions.
 
 ---
 
