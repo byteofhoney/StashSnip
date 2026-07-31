@@ -110,12 +110,10 @@ Visit `http://127.0.0.1:5000`
 
 ---
 
-## What I Learned
+## Contributors
 
-- Structuring a Flask app using the app factory pattern and Blueprints
-- Connecting Flask to MongoDB Atlas using PyMongo
-- Building dynamic search and filtering with MongoDB regex queries
-- Managing environment variables securely with python-dotenv
+<a href="https://github.com/AdvaitVarhade"><img src="https://github.com/AdvaitVarhade.png" width="50" style="border-radius:50%"></a>
+<a href="https://github.com/pollychen-lab"><img src="https://github.com/pollychen-lab.png" width="50" style="border-radius:50%"></a>
 
 ---
 
