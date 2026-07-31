@@ -43,6 +43,62 @@ nav {
 .nav-item { color: var(--muted); font-size: 0.88rem; font-weight: 500; }
 .nav-item:hover { color: var(--amber); }
 
+.icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.4rem;
+    border-radius: var(--radius);
+    color: var(--muted);
+    transition: color 0.15s, background 0.15s;
+    position: relative;
+}
+.icon-btn:hover {
+    color: var(--amber);
+    background: rgba(217, 119, 6, 0.1);
+}
+
+.nav-divider {
+    width: 1px;
+    height: 18px;
+    background: var(--muted);
+    margin: 0 0.1rem;
+    opacity: 0.5;
+}
+
+[data-tooltip] {
+    position: relative;
+}
+
+[data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 6px;
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border);
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 0.25rem 0.55rem;
+    border-radius: var(--radius);
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    z-index: 150;
+}
+
+[data-tooltip]:hover::after {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(2px);
+}
+
 .btn-add {
     background: var(--amber);
     color: #17140f;
