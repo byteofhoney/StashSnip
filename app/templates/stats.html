@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Stash Statistics</h1>
+    <p>Overview of your stashed code snippets</p>
+</div>
+
+<div class="stats-overview">
+    <div class="stat-card">
+        <span class="stat-label">Total Snippets</span>
+        <span class="stat-value">{{ total_snippets }}</span>
+    </div>
+    <div class="stat-card">
+        <span class="stat-label">Languages Used</span>
+        <span class="stat-value">{{ languages_stats|length }}</span>
+    </div>
+    <div class="stat-card">
+        <span class="stat-label">Oldest Snippet</span>
+        <div class="stat-value-sub">
+            {% if oldest_snippet %}
+                <strong>{{ oldest_snippet.title }}</strong>
+                <br><small>{{ oldest_snippet.created_at.strftime('%b %d, %Y') if oldest_snippet.created_at else '' }}</small>
+            {% else %}
+                N/A
+            {% endif %}
+        </div>
+    </div>
+    <div class="stat-card">
+        <span class="stat-label">Newest Snippet</span>
+        <div class="stat-value-sub">
+            {% if newest_snippet %}
+                <strong>{{ newest_snippet.title }}</strong>
+                <br><small>{{ newest_snippet.created_at.strftime('%b %d, %Y') if newest_snippet.created_at else '' }}</small>
+            {% else %}
+                N/A
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="stats-grid">
+    <div class="stats-section">
+        <h2>Snippets by Language</h2>
+        {% if languages_stats %}
+            <div class="bar-chart">
+                {% for item in languages_stats %}
+                    {% set pct = (item.count / total_snippets * 100)|round|int if total_snippets > 0 else 0 %}
+                    <div class="chart-row">
+                        <div class="chart-label">{{ item._id }}</div>
+                        <div class="chart-bar-container">
+                            <div class="chart-bar" style="width: {{ pct }}%;"></div>
+                        </div>
+                        <div class="chart-count">{{ item.count }} ({{ pct }}%)</div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-muted">No snippets available.</p>
+        {% endif %}
+    </div>
+
+    <div class="stats-section">
+        <h2>Top Tags</h2>
+        {% if tags_stats %}
+            <div class="bar-chart">
+                {% for item in tags_stats %}
+                    {% set max_tag_count = tags_stats[0].count if tags_stats[0].count > 0 else 1 %}
+                    {% set tag_pct = (item.count / max_tag_count * 100)|round|int %}
+                    <div class="chart-row">
+                        <div class="chart-label">#{{ item._id }}</div>
+                        <div class="chart-bar-container">
+                            <div class="chart-bar tag-bar" style="width: {{ tag_pct }}%;"></div>
+                        </div>
+                        <div class="chart-count">{{ item.count }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-muted">No tags available.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -73,12 +73,20 @@ class FakeSnippetsCollection:
                 if not any(self.matches(document, clause) for clause in value):
                     return False
                 continue
+            if isinstance(value, dict) and "$exists" in value:
+                exists = value["$exists"]
+                if (key in document) != exists:
+                    return False
+                continue
             if isinstance(value, dict) and "$regex" in value:
                 if value["$regex"].lower() not in document.get(key, "").lower():
                     return False
                 continue
-            if document.get(key) != value and value not in document.get(key, []):
-                return False
+            
+            doc_val = document.get(key)
+            if doc_val != value:
+                if not isinstance(doc_val, list) or value not in doc_val:
+                    return False
         return True
 
 
@@ -188,3 +196,29 @@ def test_pagination_handles_empty_results(client, fake_collection):
     assert response.status_code == 200
     assert b"0 snippets found" in response.data
     assert b"Page 1 of" not in response.data
+
+
+def test_stats_page_loads_and_shows_data(client, fake_collection):
+    """Stats page should load and render counts correctly"""
+    fake_collection.documents = [
+        make_test_snippet(1, language="python", tags=["flask", "api"]),
+        make_test_snippet(2, language="python", tags=["flask"]),
+        make_test_snippet(3, language="javascript", tags=["node"]),
+    ]
+
+    response = client.get("/stats")
+    assert response.status_code == 200
+    assert b"Stash Statistics" in response.data
+    assert b"Total Snippets" in response.data
+    assert b"3" in response.data
+
+
+def test_stats_page_empty_state(client, fake_collection):
+    """Stats page should render gracefully when no snippets exist"""
+    fake_collection.documents = []
+
+    response = client.get("/stats")
+    assert response.status_code == 200
+    assert b"Stash Statistics" in response.data
+    assert b"0" in response.data
+
