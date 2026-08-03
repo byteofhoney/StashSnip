@@ -41,6 +41,29 @@ function closeModal() {
     document.getElementById("deleteModal").classList.remove("active");
 }
 
+
+function openSidebar() {
+    document.getElementById("sidebarOverlay").classList.add("active");
+    document.getElementById("sidebarToggle").setAttribute("aria-expanded", "true");
+}
+
+function closeSidebar() {
+    document.getElementById("sidebarOverlay").classList.remove("active");
+    document.getElementById("sidebarToggle").setAttribute("aria-expanded", "false");
+}
+
+// Close sidebar on overlay click, same pattern as delete modal
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("sidebarOverlay").addEventListener("click", function(e) {
+        if (e.target === this) closeSidebar();
+    });
+});
+
+// Close sidebar on Escape key
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeSidebar();
+});
+
 // Close modal on overlay click
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("deleteModal").addEventListener("click", function(e) {
