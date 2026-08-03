@@ -59,6 +59,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+// Close sidebar on Escape key
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeSidebar();
+});
 
 // Close modal on overlay click
 document.addEventListener("DOMContentLoaded", () => {
