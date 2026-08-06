@@ -188,3 +188,19 @@ def test_pagination_handles_empty_results(client, fake_collection):
     assert response.status_code == 200
     assert b"0 snippets found" in response.data
     assert b"Page 1 of" not in response.data
+
+
+def test_search_matches_code_field(client, fake_collection):
+    """Search query should match content in the code field"""
+    snip1 = make_test_snippet(1)
+    snip1["code"] = "def secret_function(): pass"
+    snip2 = make_test_snippet(2)
+    snip2["code"] = "console.log('hello')"
+    fake_collection.documents = [snip1, snip2]
+
+    response = client.get("/?q=secret_function")
+    assert response.status_code == 200
+    assert b"1 snippet found" in response.data
+    assert b"Snippet 01" in response.data
+    assert b"Snippet 02" not in response.data
+
