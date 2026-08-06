@@ -22,6 +22,11 @@
         </div>
 
         <div class="form-group">
+            {{ form.collection.label }}
+            {{ form.collection(placeholder="e.g. Work, Side Project, Personal") }}
+        </div>
+
+        <div class="form-group">
             {{ form.code.label }}
             {{ form.code(placeholder="Paste your code here...", rows=12) }}
         </div>

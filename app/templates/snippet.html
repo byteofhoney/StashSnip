@@ -5,6 +5,9 @@
     <div class="detail-header">
         <div>
             <span class="language-badge">{{ snippet.language }}</span>
+            {% if snippet.collection %}
+            <span class="language-badge" style="background-color: var(--bg-alt); color: var(--text-muted); border: 1px solid var(--border);">{{ snippet.collection }}</span>
+            {% endif %}
             <h1>{{ snippet.title }}</h1>
             {% if snippet.description %}
                 <p class="description">{{ snippet.description }}</p>

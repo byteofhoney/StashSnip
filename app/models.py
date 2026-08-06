@@ -1,6 +1,6 @@
 from datetime import datetime, UTC
 
-def make_snippet(title, language, code, description, tags):
+def make_snippet(title, language, code, description, tags, collection=""):
     """
     Returns a clean snippet document ready to insert into MongoDB.
     Centralizing this means if we ever change the schema,
@@ -12,6 +12,7 @@ def make_snippet(title, language, code, description, tags):
         "code": code,
         "description": description,
         "tags": tags,
+        "collection": collection,
         "created_at": datetime.now(UTC),
         "updated_at": datetime.now(UTC)
         

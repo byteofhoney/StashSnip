@@ -22,6 +22,11 @@
         </div>
 
         <div class="form-group">
+            {{ form.collection.label }}
+            {{ form.collection() }}
+        </div>
+
+        <div class="form-group">
             {{ form.code.label }}
             {{ form.code(rows=12) }}
         </div>

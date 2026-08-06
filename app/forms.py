@@ -20,4 +20,5 @@ class SnippetForm(FlaskForm):
     language = SelectField("Language", choices=LANGUAGES)
     code = TextAreaField("Code", validators=[DataRequired()])
     description = StringField("Description", validators=[Length(max=200)])
+    collection = StringField("Collection", validators=[Length(max=50)])
     tags = StringField("Tags (comma separated)")
