@@ -389,7 +389,17 @@ main { max-width: 1000px; margin: 0 auto; padding: 2rem 1.5rem; }
 .card-header { margin-bottom: 0.6rem; }
 .card-title { color: var(--text); font-size: 0.92rem; font-weight: 500; line-height: 1.4; display: block; margin-top: 0.4rem; }
 .card-title:hover { color: var(--amber); }
-.card-description { color: var(--muted); font-size: 0.8rem; line-height: 1.5; margin-bottom: 0.6rem; }
+
+.card-description {
+    color: var(--muted);
+    font-size: 0.8rem;
+    line-height: 1.5;
+    margin-bottom: 0.6rem;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
 
 /* Badge  */
 .language-badge {
@@ -731,4 +741,14 @@ main { max-width: 1000px; margin: 0 auto; padding: 2rem 1.5rem; }
 .sidebar-placeholder {
     color: var(--muted);
     font-size: 0.85rem;
+}
+
+.tag-more {
+    color: var(--muted);
+    font-style: italic;
+    cursor: default;
+}
+.tag-more:hover {
+    background: var(--border);
+    color: var(--muted);
 }
