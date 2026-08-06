@@ -27,6 +27,7 @@ def index():
         filters["$or"] = [
             {"title": {"$regex": query, "$options": "i"}},
             {"description": {"$regex": query, "$options": "i"}},
+            {"code": {"$regex": query, "$options": "i"}},
         ]
     if tag:
         filters["tags"] = tag
