@@ -188,3 +188,19 @@ def test_pagination_handles_empty_results(client, fake_collection):
     assert response.status_code == 200
     assert b"0 snippets found" in response.data
     assert b"Page 1 of" not in response.data
+
+
+def test_filter_by_collection(client, fake_collection):
+    """Home page should filter snippets by collection"""
+    snip1 = make_test_snippet(1)
+    snip1["collection"] = "Work"
+    snip2 = make_test_snippet(2)
+    snip2["collection"] = "Personal"
+    fake_collection.documents = [snip1, snip2]
+
+    response = client.get("/?collection=Work")
+    assert response.status_code == 200
+    assert b"1 snippet found" in response.data
+    assert b"Snippet 01" in response.data
+    assert b"Snippet 02" not in response.data
+
