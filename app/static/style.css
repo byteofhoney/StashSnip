@@ -742,3 +742,13 @@ main { max-width: 1000px; margin: 0 auto; padding: 2rem 1.5rem; }
     color: var(--muted);
     font-size: 0.85rem;
 }
+
+.tag-more {
+    color: var(--muted);
+    font-style: italic;
+    cursor: default;
+}
+.tag-more:hover {
+    background: var(--border);
+    color: var(--muted);
+}
