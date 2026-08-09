@@ -55,9 +55,12 @@
         <p class="card-description">{{ snippet.description }}</p>
         {% endif %}
         <div class="card-tags">
-            {% for t in snippet.tags %}
+            {% for t in snippet.tags[:4] %}
             <a href="/?tag={{ t }}" class="tag">{{ t }}</a>
             {% endfor %}
+            {% if snippet.tags|length > 4 %}
+            <span class="tag tag-more">+{{ snippet.tags|length - 4 }} more</span>
+            {% endif %}
         </div>
     </div>
         {% endfor %}
