@@ -1,3 +1,4 @@
+import re
 from datetime import datetime, UTC
 from math import ceil
 
@@ -24,10 +25,11 @@ def index():
     filters = {}
 
     if query:
+        escaped_query = re.escape(query)
         filters["$or"] = [
-            {"title": {"$regex": query, "$options": "i"}},
-            {"description": {"$regex": query, "$options": "i"}},
-            {"code": {"$regex": query, "$options": "i"}},
+            {"title": {"$regex": escaped_query, "$options": "i"}},
+            {"description": {"$regex": escaped_query, "$options": "i"}},
+            {"code": {"$regex": escaped_query, "$options": "i"}},
         ]
     if tag:
         filters["tags"] = tag
