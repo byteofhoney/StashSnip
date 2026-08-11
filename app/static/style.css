@@ -60,9 +60,14 @@ nav {
     padding: 0.4rem;
     border-radius: var(--radius);
     color: var(--muted);
-    transition: color 0.15s, background 0.15s;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    transition: color 0.15s, background 0.15s, box-shadow 0.15s;
     position: relative;
 }
+
 .icon-btn:hover {
     color: var(--amber);
     background: rgba(217, 119, 6, 0.1);
