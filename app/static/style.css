@@ -779,3 +779,11 @@ main { max-width: 1000px; margin: 0 auto; padding: 2rem 1.5rem; }
     background: var(--border);
     color: var(--muted);
 }
+
+/* Show moon by default (dark theme), hide sun */
+.icon-sun { display: none; }
+.icon-moon { display: inline-flex; }
+
+/* Light theme: flip it */
+[data-theme="light"] .icon-sun { display: inline-flex; }
+[data-theme="light"] .icon-moon { display: none; }
