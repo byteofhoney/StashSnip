@@ -92,10 +92,13 @@ function toggleTheme() {
 }
 
 function applyTheme(theme) {
+    const toggleBtn = document.getElementById("themeToggle");
     if (theme === "light") {
         document.documentElement.setAttribute("data-theme", "light");
+        if (toggleBtn) toggleBtn.setAttribute("data-tooltip", "Switch to dark theme");
     } else {
         document.documentElement.removeAttribute("data-theme");
+        if (toggleBtn) toggleBtn.setAttribute("data-tooltip", "Switch to light theme");
     }
 }
 
