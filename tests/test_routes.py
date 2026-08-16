@@ -66,6 +66,8 @@ class FakeSnippetsCollection:
         document = self.find_one(filters)
         if document:
             document.update(update.get("$set", {}))
+            for key in update.get("$unset", {}):
+                document.pop(key, None)
 
     def matches(self, document, filters):
         for key, value in filters.items():
@@ -78,11 +80,15 @@ class FakeSnippetsCollection:
                 if (key in document) != exists:
                     return False
                 continue
+            if isinstance(value, dict) and "$ne" in value:
+                if document.get(key) == value["$ne"]:
+                    return False
+                continue
             if isinstance(value, dict) and "$regex" in value:
                 if value["$regex"].lower() not in document.get(key, "").lower():
                     return False
                 continue
-            
+
             doc_val = document.get(key)
             if doc_val != value:
                 if not isinstance(doc_val, list) or value not in doc_val:
