@@ -243,3 +243,36 @@ def test_stats_page_empty_state(client, fake_collection):
     assert b"Stash Statistics" in response.data
     assert b"0" in response.data
 
+def test_delete_snippet_soft_deletes(client, fake_collection):
+    """Deleting a snippet should flag it as deleted, not remove it"""
+    snip = make_test_snippet(1)
+    fake_collection.documents = [snip]
+
+    response = client.post(f"/delete/{snip['_id']}")
+    assert response.status_code == 302
+
+    stored = fake_collection.find_one({"_id": snip["_id"]})
+    assert stored["deleted"] is True
+
+
+def test_deleted_snippet_hidden_from_index(client, fake_collection):
+    """Soft-deleted snippets should not appear on the home page"""
+    snip = make_test_snippet(1)
+    fake_collection.documents = [snip]
+    client.post(f"/delete/{snip['_id']}")
+
+    response = client.get("/")
+    assert b"Snippet 01" not in response.data
+
+
+def test_restore_snippet_undoes_delete(client, fake_collection):
+    """Restoring a deleted snippet should make it visible again"""
+    snip = make_test_snippet(1)
+    fake_collection.documents = [snip]
+    client.post(f"/delete/{snip['_id']}")
+
+    response = client.post(f"/restore/{snip['_id']}")
+    assert response.status_code == 302
+
+    stored = fake_collection.find_one({"_id": snip["_id"]})
+    assert stored["deleted"] is False
