@@ -23,6 +23,7 @@ def index():
     page = max(page, 1)
 
     filters = {}
+    filters["deleted"] = {"$ne": True}
 
     if query:
         escaped_query = re.escape(query)
@@ -101,8 +102,28 @@ def view_snippet(id):
 
 @main.route("/delete/<id>", methods=["POST"])
 def delete_snippet(id):
-    snippets_collection.delete_one({"_id": ObjectId(id)})
-    flash("Snip deleted.", "success")
+    snippets_collection.update_one(
+        {"_id": ObjectId(id)},
+        {"$set": {"deleted": True, "deleted_at": datetime.now(UTC)}}
+    )
+    undo_url = url_for("main.restore_snippet", id=id)
+    flash(
+        f'Snip deleted. '
+        f'<form action="{undo_url}" method="POST" class="undo-form">'
+        f'<button type="submit" class="undo-link">Undo</button>'
+        f'</form>',
+        "success"
+    )
+    return redirect(url_for("main.index"))
+
+
+@main.route("/restore/<id>", methods=["POST"])
+def restore_snippet(id):
+    snippets_collection.update_one(
+        {"_id": ObjectId(id)},
+        {"$set": {"deleted": False}, "$unset": {"deleted_at": ""}}
+    )
+    flash("Snip restored.", "success")
     return redirect(url_for("main.index"))
 
 @main.route("/edit/<id>", methods=["GET", "POST"])

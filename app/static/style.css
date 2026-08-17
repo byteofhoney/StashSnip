@@ -787,3 +787,24 @@ main { max-width: 1000px; margin: 0 auto; padding: 2rem 1.5rem; }
 /* Light theme: flip it */
 [data-theme="light"] .icon-sun { display: inline-flex; }
 [data-theme="light"] .icon-moon { display: none; }
+
+.undo-form {
+    display: inline;
+    margin: 0;
+}
+
+.undo-link {
+    background: transparent;
+    border: none;
+    padding: 0;
+    color: var(--amber);
+    font-weight: 700;
+    font-size: inherit;
+    font-family: inherit;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.undo-link:hover {
+    opacity: 0.85;
+}

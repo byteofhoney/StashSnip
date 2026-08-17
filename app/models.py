@@ -1,20 +1,15 @@
 from datetime import datetime, UTC
 
 def make_snippet(title, language, code, description, tags):
-    """
-    Returns a clean snippet document ready to insert into MongoDB.
-    Centralizing this means if we ever change the schema,
-    we change it in one place only.
-    """
     return {
         "title": title,
         "language": language,
         "code": code,
         "description": description,
         "tags": tags,
+        "deleted": False,
         "created_at": datetime.now(UTC),
         "updated_at": datetime.now(UTC)
-        
     }
 
 def format_snippet(snippet):

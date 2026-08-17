@@ -104,6 +104,14 @@ function applyTheme(theme) {
 
 // Apply saved theme on load
 document.addEventListener("DOMContentLoaded", () => {
-    const saved = getCookie("theme");
-    if (saved === "light") applyTheme("light");
+    const flashes = document.querySelectorAll(".flash");
+    flashes.forEach(flash => {
+        const hasUndo = flash.querySelector(".undo-link");
+        const delay = hasUndo ? 6000 : 3000;
+        setTimeout(() => {
+            flash.style.transition = "opacity 0.5s";
+            flash.style.opacity = "0";
+            setTimeout(() => flash.remove(), 500);
+        }, delay);
+    });
 });
