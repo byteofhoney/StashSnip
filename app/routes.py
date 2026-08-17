@@ -107,7 +107,13 @@ def delete_snippet(id):
         {"$set": {"deleted": True, "deleted_at": datetime.now(UTC)}}
     )
     undo_url = url_for("main.restore_snippet", id=id)
-    flash(f'Snip deleted. <a href="{undo_url}" class="undo-link">Undo</a>', "success")
+    flash(
+        f'Snip deleted. '
+        f'<form action="{undo_url}" method="POST" class="undo-form">'
+        f'<button type="submit" class="undo-link">Undo</button>'
+        f'</form>',
+        "success"
+    )
     return redirect(url_for("main.index"))
 
 
