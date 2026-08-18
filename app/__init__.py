@@ -8,6 +8,9 @@ def create_app():
     from app.routes import main
     app.register_blueprint(main)
 
+    from app.api import api
+    app.register_blueprint(api, url_prefix="/api")
+
     @app.errorhandler(404)
     def page_not_found(e):
         return render_template("404.html"), 404
