@@ -94,7 +94,7 @@ The app follows Flask's application factory pattern with a single Blueprint for 
 ![Home](docs/screenshots/home.png)
 ![Snippet View](docs/screenshots/snippet.png)
 ![Add Snip](docs/screenshots/add.png)
-![Delete Modal](docs/screenshots/delete.png)
+![Stats Modal](docs/screenshots/stats.png)
 
 ---
 
