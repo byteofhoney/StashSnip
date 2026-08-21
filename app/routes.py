@@ -87,8 +87,24 @@ def add_snippet():
             description=form.description.data,
             tags=tags,
         )
+
+        existing = snippets_collection.find_one({
+            "code": form.code.data,
+            "deleted": {"$ne": True}
+        })
+
         snippets_collection.insert_one(snippet)
-        flash("Snip saved successfully!", "success")
+
+        if existing:
+            existing_url = url_for("main.view_snippet", id=existing["_id"])
+            flash(
+                f'Snip saved! Note: you already have a snippet with identical code — '
+                f'<a href="{existing_url}">view it here</a>.',
+                "success"
+            )
+        else:
+            flash("Snip saved successfully!", "success")
+
         return redirect(url_for("main.index"))
     return render_template("add.html", form=form)
 
