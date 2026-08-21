@@ -121,8 +121,9 @@ def make_test_snippet(index, language="python", tags=None):
         "code": f"print({index})",
         "description": f"Example snippet {index}",
         "tags": tags or [],
-        "created_at": datetime(2024, 1, index),
-        "updated_at": datetime(2024, 1, index),
+        "deleted": False,
+        "created_at": datetime(2024, 1, index, tzinfo=UTC),
+        "updated_at": datetime(2024, 1, index, tzinfo=UTC),
     }
 
 
@@ -276,3 +277,46 @@ def test_restore_snippet_undoes_delete(client, fake_collection):
 
     stored = fake_collection.find_one({"_id": snip["_id"]})
     assert stored["deleted"] is False
+    
+    def test_add_snippet_duplicate_code_shows_warning(client, fake_collection):
+        """Saving a snippet with code identical to an existing one should show a warning"""
+        existing = make_test_snippet(1)
+        existing["code"] = "print('duplicate')"
+        fake_collection.documents = [existing]
+
+        response = client.post(
+            "/add",
+            data={
+                "title": "New Snippet",
+                "language": "python",
+                "code": "print('duplicate')",
+                "description": "",
+                "tags": "",
+            },
+            follow_redirects=True,
+        )
+
+        assert response.status_code == 200
+        assert b"already have a snippet with identical code" in response.data
+
+
+def test_add_snippet_new_code_shows_no_warning(client, fake_collection):
+    """Saving genuinely new code should not trigger a duplicate warning"""
+    existing = make_test_snippet(1)
+    existing["code"] = "print('existing')"
+    fake_collection.documents = [existing]
+
+    response = client.post(
+        "/add",
+        data={
+            "title": "New Snippet",
+            "language": "python",
+            "code": "print('brand new')",
+            "description": "",
+            "tags": "",
+        },
+        follow_redirects=True,
+    )
+
+    assert response.status_code == 200
+    assert b"already have a snippet with identical code" not in response.data
