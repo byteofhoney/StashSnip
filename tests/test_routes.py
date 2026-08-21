@@ -121,8 +121,9 @@ def make_test_snippet(index, language="python", tags=None):
         "code": f"print({index})",
         "description": f"Example snippet {index}",
         "tags": tags or [],
-        "created_at": datetime(2024, 1, index),
-        "updated_at": datetime(2024, 1, index),
+        "deleted": False,
+        "created_at": datetime(2024, 1, index, tzinfo=UTC),
+        "updated_at": datetime(2024, 1, index, tzinfo=UTC),
     }
 
 
