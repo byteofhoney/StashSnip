@@ -746,6 +746,50 @@ main { max-width: 1000px; margin: 0 auto; padding: 2rem 1.5rem; }
     transition: transform 0.25s ease;
 }
 
+.sidebar-section-label {
+    color: var(--muted);
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    padding: 0.6rem 0.6rem 0.3rem;
+    opacity: 0.7;
+}
+
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.65rem 0.6rem;
+    border-radius: var(--radius);
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+
+.sidebar-item svg {
+    flex-shrink: 0;
+    color: var(--muted);
+    transition: color 0.15s;
+}
+
+.sidebar-item:hover {
+    background: rgba(217, 119, 6, 0.08);
+    color: var(--amber);
+}
+
+.sidebar-item:hover svg {
+    color: var(--amber);
+}
+
+.sidebar-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 0.6rem 0;
+}
+
 .sidebar-overlay.active .sidebar {
     transform: translateX(0);
 }
