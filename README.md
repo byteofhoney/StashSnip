@@ -40,6 +40,7 @@ Every developer accumulates dozens of useful code snippets. A regex that finally
 - Save snippets with title, language, description and tags
 - Full-text search across title and description
 - Filter by language or tag
+- REST API for accessing and searching snippets programmatically
 - Pagination, so the grid stays fast as your stash grows
 - Syntax highlighting via highlight.js
 - Copy to clipboard in one click, from the snippet detail page or straight from the card grid
@@ -185,6 +186,20 @@ Thanks to everyone who has contributed to StashSnip
 
 <a href="https://github.com/AdvaitVarhade"><img src="https://github.com/AdvaitVarhade.png" width="50" style="border-radius:50%"></a>
 <a href="https://github.com/pollychen-lab"><img src="https://github.com/pollychen-lab.png" width="50" style="border-radius:50%"></a>
+
+---
+
+## REST API
+
+StashSnip exposes a lightweight, public REST API mounted under `/api`:
+
+| Method | Endpoint | Description | Query Parameters |
+|---|---|---|---|
+| `GET` | `/api/snippets` | List all snippets in JSON format | `?q=search_term`, `?language=py`, `?tag=flask` |
+| `GET` | `/api/snippets/<id>` | Get a single snippet document by ID | None |
+
+### Authentication & Scope
+The API is currently open (unauthenticated) for client tools and browser extensions.
 
 ---
 
