@@ -111,13 +111,16 @@ def add_snippet():
 
 @main.route("/snippet/<id>")
 def view_snippet(id):
-    snippet = snippets_collection.find_one({"_id": ObjectId(id)})
+    snippet = snippets_collection.find_one({"_id": ObjectId(id), "deleted": {"$ne": True}})
     if not snippet:
         return render_template("404.html"), 404
     return render_template("snippet.html", snippet=snippet)
 
 @main.route("/delete/<id>", methods=["POST"])
 def delete_snippet(id):
+    snippet = snippets_collection.find_one({"_id": ObjectId(id), "deleted": {"$ne": True}})
+    if not snippet:
+        return render_template("404.html"), 404
     snippets_collection.update_one(
         {"_id": ObjectId(id)},
         {"$set": {"deleted": True, "deleted_at": datetime.now(UTC)}}
@@ -144,7 +147,7 @@ def restore_snippet(id):
 
 @main.route("/edit/<id>", methods=["GET", "POST"])
 def edit_snippet(id):
-    snippet = snippets_collection.find_one({"_id": ObjectId(id)})
+    snippet = snippets_collection.find_one({"_id": ObjectId(id), "deleted": {"$ne": True}})
     if not snippet:
         return render_template("404.html"), 404
 

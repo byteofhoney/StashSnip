@@ -48,9 +48,8 @@ class FakeSnippetsCollection:
         return sorted({document[field] for document in self.documents if document.get(field)})
 
     def find_one(self, filters):
-        target_id = filters.get("_id")
         for document in self.documents:
-            if document["_id"] == target_id:
+            if self.matches(document, filters):
                 return document
         return None
 
@@ -320,3 +319,42 @@ def test_add_snippet_new_code_shows_no_warning(client, fake_collection):
 
     assert response.status_code == 200
     assert b"already have a snippet with identical code" not in response.data
+
+
+def test_deleted_snippet_not_viewable(client, fake_collection):
+    """Viewing a soft-deleted snippet via direct URL should return 404"""
+    snip = make_test_snippet(1)
+    snip["deleted"] = True
+    fake_collection.documents = [snip]
+
+    response = client.get(f"/snippet/{snip['_id']}")
+    assert response.status_code == 404
+
+
+def test_deleted_snippet_not_editable(client, fake_collection):
+    """Editing a soft-deleted snippet via direct URL should return 404"""
+    snip = make_test_snippet(1)
+    snip["deleted"] = True
+    fake_collection.documents = [snip]
+
+    response = client.get(f"/edit/{snip['_id']}")
+    assert response.status_code == 404
+
+
+def test_delete_already_deleted_snippet_returns_404(client, fake_collection):
+    """Posting delete on an already-deleted snippet should return 404, not re-flash"""
+    snip = make_test_snippet(1)
+    snip["deleted"] = True
+    fake_collection.documents = [snip]
+
+    response = client.post(f"/delete/{snip['_id']}")
+    assert response.status_code == 404
+
+
+def test_non_deleted_snippet_still_viewable(client, fake_collection):
+    """A snippet that is not deleted should remain viewable exactly as before"""
+    snip = make_test_snippet(1)
+    fake_collection.documents = [snip]
+
+    response = client.get(f"/snippet/{snip['_id']}")
+    assert response.status_code == 200
