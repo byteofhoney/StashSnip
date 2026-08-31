@@ -541,6 +541,14 @@ main { max-width: 1000px; margin: 0 auto; padding: 2rem 1.5rem; }
 }
 .btn-submit:hover { opacity: 0.88; }
 
+.empty-state .btn-404-back {
+    display: inline-block;
+    text-decoration: none;
+    margin-right: 0;
+    color: #17140f;
+    margin-top: 0.8rem;
+}
+
 .btn-cancel { color: var(--muted); font-size: 0.88rem; }
 .btn-cancel:hover { color: var(--text); }
 
