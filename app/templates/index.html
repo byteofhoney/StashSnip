@@ -8,7 +8,10 @@
 
 <div class="search-bar">
     <form method="GET" action="/">
-        <input type="text" name="q" value="{{ query }}" placeholder="Search snips...">
+        <div class="search-input-wrapper">
+            <input type="text" name="q" id="searchInput" value="{{ query }}" placeholder="Search snips...">
+            <button type="button" id="searchClearBtn" class="search-clear-btn" aria-label="Clear search text" style="display: none;">×</button>
+        </div>
         <select name="language">
             <option value="">All Languages</option>
             {% for lang in languages %}
