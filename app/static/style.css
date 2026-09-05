@@ -288,9 +288,37 @@ main { max-width: 1000px; margin: 0 auto; padding: 2rem 1.5rem; }
     outline: none;
 }
 
-.search-bar input { flex: 1; min-width: 180px; }
+.search-input-wrapper { flex: 1; min-width: 180px; }
+
 .search-bar input:focus,
 .search-bar select:focus { border-color: var(--amber); }
+
+.search-input-wrapper {
+    position: relative;
+}
+
+.search-input-wrapper input {
+    width: 100%;
+    padding-right: 2.2rem;
+}
+
+.search-clear-btn {
+    position: absolute;
+    top: 50%;
+    right: 0.6rem;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    font-size: 1.1rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0.2rem;
+}
+
+.search-clear-btn:hover {
+    color: var(--amber);
+}
 
 .search-bar button 
 {
