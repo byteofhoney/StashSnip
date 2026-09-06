@@ -115,3 +115,24 @@ document.addEventListener("DOMContentLoaded", () => {
         }, delay);
     });
 });
+
+// ── Search clear button ──
+document.addEventListener("DOMContentLoaded", () => {
+    const input = document.getElementById("searchInput");
+    const clearBtn = document.getElementById("searchClearBtn");
+    if (!input || !clearBtn) return;
+
+    function toggleClearBtn() {
+        clearBtn.style.display = input.value.length > 0 ? "block" : "none";
+    }
+
+    toggleClearBtn(); // set correct initial state on page load
+
+    input.addEventListener("input", toggleClearBtn);
+
+    clearBtn.addEventListener("click", () => {
+        input.value = "";
+        toggleClearBtn();
+        input.focus();
+    });
+});
