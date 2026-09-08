@@ -59,9 +59,27 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-// Close sidebar on Escape key
+function isTypingInFormField(target) {
+    const tag = target && target.tagName;
+    return tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT";
+}
+
+// Close sidebar on Escape; home-page shortcuts for search and new snip
 document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") closeSidebar();
+
+    if (isTypingInFormField(e.target) || e.ctrlKey || e.metaKey || e.altKey) return;
+
+    const searchInput = document.getElementById("searchInput");
+    if (!searchInput) return;
+
+    if (e.key === "/") {
+        e.preventDefault();
+        searchInput.focus();
+    } else if (e.key === "n") {
+        e.preventDefault();
+        window.location.href = "/add";
+    }
 });
 
 // Close modal on overlay click
