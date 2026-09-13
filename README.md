@@ -179,15 +179,6 @@ StashSnip is open to contributions of all sizes from fixing a typo to picking up
 
 ---
 
-## Contributors
-
-Thanks to everyone who has contributed to StashSnip 
-
-<a href="https://github.com/AdvaitVarhade"><img src="https://github.com/AdvaitVarhade.png" width="50" style="border-radius:50%"></a>
-<a href="https://github.com/pollychen-lab"><img src="https://github.com/pollychen-lab.png" width="50" style="border-radius:50%"></a>
-
----
-
 ## License
 
 MIT — see [LICENSE](LICENSE)
