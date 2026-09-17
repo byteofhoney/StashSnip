@@ -22,7 +22,6 @@
 - [Environment Variables](#environment-variables)
 - [Testing](#testing)
 - [Contributing](#contributing)
-- [Contributors](#contributors)
 - [License](#license)
 
 ---
