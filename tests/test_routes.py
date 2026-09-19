@@ -358,3 +358,23 @@ def test_non_deleted_snippet_still_viewable(client, fake_collection):
 
     response = client.get(f"/snippet/{snip['_id']}")
     assert response.status_code == 200
+    
+def test_export_markdown_downloads_file(client, fake_collection):
+    """Markdown export should return a downloadable file with snippet content"""
+    fake_collection.documents = [make_test_snippet(1)]
+
+    response = client.get("/export/markdown")
+    assert response.status_code == 200
+    assert response.mimetype == "text/markdown"
+    assert "attachment" in response.headers["Content-Disposition"]
+    assert b"Snippet 01" in response.data
+    assert b"```python" in response.data
+
+
+def test_export_markdown_handles_empty_state(client, fake_collection):
+    """Markdown export should not crash with zero snippets"""
+    fake_collection.documents = []
+
+    response = client.get("/export/markdown")
+    assert response.status_code == 200
+    assert b"No snippets found" in response.data

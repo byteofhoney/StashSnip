@@ -1,6 +1,7 @@
 import re
 from datetime import datetime, UTC
 from math import ceil
+from flask import Response
 
 from bson import ObjectId
 from flask import Blueprint, render_template, request, redirect, url_for, flash
@@ -237,3 +238,39 @@ def stats():
         newest_snippet=newest_snippet,
     )
 
+
+def build_markdown_export(snippets):
+    if not snippets:
+        return "# StashSnip Export\n\nNo snippets found.\n"
+
+    lines = ["# StashSnip Export\n"]
+    for snippet in snippets:
+        lines.append(f"## {snippet['title']}\n")
+        lines.append(f"**Language:** {snippet['language']}")
+        tags = snippet.get('tags', [])
+        if tags:
+            lines.append(f" | **Tags:** {', '.join(tags)}")
+        lines.append("\n")
+        description = snippet.get('description', '')
+        if description:
+            lines.append(f"{description}\n")
+        lines.append(f"```{snippet['language']}")
+        lines.append(snippet['code'])
+        lines.append("```\n")
+        lines.append("---\n")
+
+    return "\n".join(lines)
+
+
+@main.route("/export/markdown")
+def export_markdown():
+    snippets = list(
+        snippets_collection.find({"deleted": {"$ne": True}}).sort("created_at", -1)
+    )
+    markdown_content = build_markdown_export(snippets)
+
+    return Response(
+        markdown_content,
+        mimetype="text/markdown",
+        headers={"Content-Disposition": "attachment; filename=stashsnip_export.md"}
+    )
